@@ -1,0 +1,203 @@
+﻿@model SICAR.Models.Orden
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Orden</legend>
+
+        @Html.HiddenFor(model => model.idorden)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idpersona, "transportista")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("idpersona", String.Empty)
+            @Html.ValidationMessageFor(model => model.idpersona)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idcotizacion, "cotizacion")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("idcotizacion", String.Empty)
+            @Html.ValidationMessageFor(model => model.idcotizacion)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idcliente, "cliente")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("idcliente", String.Empty)
+            @Html.ValidationMessageFor(model => model.idcliente)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idservicio, "servicio")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("idservicio", String.Empty)
+            @Html.ValidationMessageFor(model => model.idservicio)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.numero)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.numero)
+            @Html.ValidationMessageFor(model => model.numero)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.fecha)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.fecha)
+            @Html.ValidationMessageFor(model => model.fecha)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idep, "ubigeoi")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("idep", String.Empty)
+            @Html.ValidationMessageFor(model => model.idep)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ipro)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ipro)
+            @Html.ValidationMessageFor(model => model.ipro)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idis)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.idis)
+            @Html.ValidationMessageFor(model => model.idis)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.fdep, "ubigeof")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("fdep", String.Empty)
+            @Html.ValidationMessageFor(model => model.fdep)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.fpro)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.fpro)
+            @Html.ValidationMessageFor(model => model.fpro)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.fdis)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.fdis)
+            @Html.ValidationMessageFor(model => model.fdis)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idir)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.idir)
+            @Html.ValidationMessageFor(model => model.idir)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.fdir)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.fdir)
+            @Html.ValidationMessageFor(model => model.fdir)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.observacion)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.observacion)
+            @Html.ValidationMessageFor(model => model.observacion)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.bruto)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.bruto)
+            @Html.ValidationMessageFor(model => model.bruto)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.neto)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.neto)
+            @Html.ValidationMessageFor(model => model.neto)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.estado)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.estado)
+            @Html.ValidationMessageFor(model => model.estado)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.distancia)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.distancia)
+            @Html.ValidationMessageFor(model => model.distancia)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.cfecha)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.cfecha)
+            @Html.ValidationMessageFor(model => model.cfecha)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.chora)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.chora)
+            @Html.ValidationMessageFor(model => model.chora)
+        </div>
+
+
+
+
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

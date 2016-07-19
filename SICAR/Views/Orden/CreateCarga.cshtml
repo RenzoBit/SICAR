@@ -1,0 +1,76 @@
+﻿@model SICAR.Models.Carga
+
+@using (Ajax.BeginForm("CreateCarga", "Cotizacion", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "dialog-edit", OnSuccess = "posteando" }, new { id = "form2" })) {
+    @Html.AntiForgeryToken()
+    <fieldset>
+        <legend>Carga</legend>
+
+		@Html.HiddenFor(model => model.idcarga)
+		@Html.HiddenFor(model => model.idorden)
+		@Html.Hidden("OK", (string) ViewBag.OK)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idunidad)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("idunidad", "Seleccionar unidad")
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.idcargatipo)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("idcargatipo", "Seleccionar tipo de carga")
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ancho)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ancho)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.largo)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.largo)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.peso)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.peso)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.volumen)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.volumen)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.profundidad)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.profundidad)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.descripcion)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.descripcion)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.monto)
+        </div>
+        <div class="editor-field">
+			@Html.TextBoxFor(model => model.monto, new { @readonly = "readonly" })
+        </div>
+    </fieldset>
+    @Html.ValidationSummary(false)
+}

@@ -1,0 +1,103 @@
+﻿@model IEnumerable<SICAR.Models.Ubicacion>
+
+@{
+	ViewBag.Title = "Seguimiento de Orden Trabajo";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Seguimiento de Orden Trabajo</h2>
+
+@using (Html.BeginForm("Index", "Ubicacion", FormMethod.Post)) {
+<fieldset>
+    <legend>Búsqueda</legend>
+	<table>
+		<tr>
+			<td><div class="editor-label">@Html.Label("Número", new { @for = "numero" })</div></td>
+			<td><div class="editor-field">@Html.TextBox("numero")</div></td>
+			<td><input type="submit" value="Buscar" /></td>
+		</tr>
+		<tr>
+			<td><div class="editor-label">@Html.Label("Desde", new { @for = "desde" })</div></td>
+			<td><div class="editor-field">@Html.TextBox("desde")</div></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td><div class="editor-label">@Html.Label("Hasta", new { @for = "hasta" })</div></td>
+			<td><div class="editor-field">@Html.TextBox("hasta")</div></td>
+			<td><input id="generar" type="button" value="Generar" /></td>
+		</tr>
+	</table>
+</fieldset>
+}
+
+@if (Model.Count() > 0) {
+<table class="rvtabla">
+	<tr>
+		<th>
+			@Html.DisplayNameFor(model => model.idorden)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.orden.fecha)
+		</th>
+		<th>
+			@Html.DisplayName("Coordenadas")
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.direccion)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.hora)
+		</th>
+		<th>
+			@Html.DisplayName("Seleccionar")
+		</th>
+	</tr>
+	@using (Html.BeginForm("Seguimiento", "Ubicacion", FormMethod.Post, new { id = "form1" })) {
+	foreach (var item in Model) {
+	<tr>
+		<td>
+			@Html.DisplayFor(modelItem => item.orden.numero)
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.orden.fecha)
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.latitud) , @Html.DisplayFor(modelItem => item.longitud)
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.direccion)
+		</td>
+		<td>
+			@Html.DisplayFor(modelItem => item.hora)
+		</td>
+		<td>
+			<input name="idubicacion" type="checkbox" value="@item.idubicacion"/>
+		</td>
+	</tr>
+	}
+	}
+</table>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+	@Scripts.Render("~/bundles/jqueryui")
+	<script type="text/javascript">
+	$(function () {
+		$('#desde').datepicker({
+			dateFormat: 'dd/mm/yy',
+			changeMonth: true,
+			changeYear: true
+		});
+		$('#hasta').datepicker({
+			dateFormat: 'dd/mm/yy',
+			changeMonth: true,
+			changeYear: true
+		});
+		$('#generar').click(function (event) {
+			event.preventDefault();
+			$('#form1').submit();
+		});
+	});
+	</script>
+}

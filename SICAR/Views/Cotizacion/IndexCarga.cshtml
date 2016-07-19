@@ -1,0 +1,66 @@
+﻿@model IEnumerable<SICAR.Models.Carga>
+
+@if (Model.Count() > 0) {
+<table class="rvtabla">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.idunidad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.idcargatipo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ancho)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.largo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.peso)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.volumen)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.profundidad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.monto)
+        </th>
+    </tr>
+	@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.unidad.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cargatipo.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ancho)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.largo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.peso)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.volumen)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.profundidad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.monto)
+        </td>
+    </tr>
+	}
+</table>
+}

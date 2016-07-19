@@ -1,0 +1,228 @@
+﻿@model SICAR.Models.Cotizacion
+
+@{
+	ViewBag.Title = "Crear cotización";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Crear cotización</h2>
+
+@using (Html.BeginForm("Create", "Cotizacion", FormMethod.Post, new { id = "form1" })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false)
+    <fieldset>
+        <legend>Cotizacion</legend>
+        @Html.HiddenFor(model => model.estado)
+        @Html.HiddenFor(model => model.distancia)
+<table>
+	<tr>
+		<td>
+        <div class="editor-label">@Html.LabelFor(model => model.numero)</div>
+        <div class="editor-field">@Html.TextBoxFor(model => model.numero, new { @readonly = "readonly" })</div>
+		</td>
+		<td>
+        <div class="editor-label">@Html.LabelFor(model => model.idpersona)</div>
+        <div class="editor-field">@Html.DropDownList("idpersona", "Seleccione cliente")</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+        <div class="editor-label">@Html.LabelFor(model => model.fecha)</div>
+        <div class="editor-field">@Html.TextBoxFor(model => model.fecha, "{0:dd/MM/yyyy}", new { @readonly = "readonly" })</div>
+		</td>
+		<td>
+        <div class="editor-label">@Html.LabelFor(model => model.idservicio)</div>
+        <div class="editor-field">@Html.DropDownList("idservicio", "Seleccione tipo de servicio")</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+        <div class="editor-label">@Html.LabelFor(model => model.idep)</div>
+        <div class="editor-field">@Html.DropDownList("idep", "Seleccione departamento inicial")</div>
+		</td>
+		<td>
+        <div class="editor-label">@Html.LabelFor(model => model.fdep)</div>
+        <div class="editor-field">@Html.DropDownList("fdep", "Seleccione departamento final")</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+        <div class="editor-label">@Html.LabelFor(model => model.ipro)</div>
+        <div class="editor-field">@Html.DropDownList("ipro", "Seleccione provincia inicial")</div>
+		</td>
+		<td>
+        <div class="editor-label">@Html.LabelFor(model => model.fpro)</div>
+        <div class="editor-field">@Html.DropDownList("fpro", "Seleccione provincia final")</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+        <div class="editor-label">@Html.LabelFor(model => model.idis)</div>
+        <div class="editor-field">@Html.DropDownList("idis", "Seleccione distrito inicial")</div>
+		</td>
+		<td>
+        <div class="editor-label">@Html.LabelFor(model => model.fdis)</div>
+        <div class="editor-field">@Html.DropDownList("fdis", "Seleccione distrito final")</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+        <div class="editor-label">@Html.LabelFor(model => model.idir)</div>
+        <div class="editor-field">@Html.TextAreaFor(model => model.idir)</div>
+		</td>
+		<td>
+        <div class="editor-label">@Html.LabelFor(model => model.fdir)</div>
+        <div class="editor-field">@Html.TextAreaFor(model => model.fdir)</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+        <div class="editor-label">@Html.LabelFor(model => model.observacion)</div>
+        <div class="editor-field">@Html.TextAreaFor(model => model.observacion)</div>
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr>
+		<td>
+        <div class="editor-label">@Html.LabelFor(model => model.bruto)</div>
+        <div class="editor-field">@Html.TextBoxFor(model => model.bruto, new { @readonly = "readonly" })</div>
+		</td>
+		<td>
+        <div class="editor-label">@Html.LabelFor(model => model.neto)</div>
+        <div class="editor-field">@Html.TextBoxFor(model => model.neto, new { @readonly = "readonly" })</div>
+		</td>
+	</tr>
+</table>
+        <p>
+            <input type="submit" value="Grabar" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Cancelar", "Index")
+    @Html.ActionLink("Agregar", "CreateCarga", new { idcarga = 0, idcotizacion = 0 }, new { @class = "crea" })
+</div>
+
+<div id="lcarga">@{ Html.RenderAction("IndexCarga"); }</div>
+
+<div id="dialog-edit" style="display: none"></div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+	<script type="text/javascript">
+	$(function () {
+		$.ajaxSetup({ cache: false });
+
+		showValidationSummaryDialog();
+		$('#form1').bind('invalid-form.validate', function (error, element) {
+			showValidationSummaryDialog();
+		});
+
+		$('#idep').change(function () {
+			var pro = '<option value="">Seleccione provincia inicial</option>';
+			if ($('#idep').val() == '')
+				$('#ipro').html(pro);
+			else
+				$.getJSON('/Cotizacion/ProvinciaList/' + $('#idep').val(), function (data) {
+					$.each(data, function (i, o) {
+						pro += "<option value='" + o.Value + "'>" + o.Text + "</option>";
+					});
+					$('#ipro').html(pro);
+				});
+			$('#idis').html('<option value="">Seleccione distrito inicial</option>');
+		});
+		$('#ipro').change(function () {
+			var dis = '<option value="">Seleccione distrito inicial</option>';
+			if ($('#ipro').val() == '')
+				$('#idis').html(dis);
+			else
+				$.getJSON('/Cotizacion/DistritoList/' + $('#idep').val() + $('#ipro').val(), function (data) {
+					$.each(data, function (i, o) {
+						dis += "<option value='" + o.Value + "'>" + o.Text + "</option>";
+					});
+					$('#idis').html(dis);
+				});
+		});
+		$('#fdep').change(function () {
+			var pro = '<option value="">Seleccione provincia final</option>';
+			if ($('#fdep').val() == '')
+				$('#fpro').html(pro);
+			else
+				$.getJSON('/Cotizacion/ProvinciaList/' + $('#fdep').val(), function (data) {
+					$.each(data, function (i, o) {
+						pro += "<option value='" + o.Value + "'>" + o.Text + "</option>";
+					});
+					$('#fpro').html(pro);
+				});
+			$('#fdis').html('<option value="">Seleccione distrito final</option>');
+		});
+		$('#fpro').change(function () {
+			var dis = '<option value="">Seleccione distrito final</option>';
+			if ($('#fpro').val() == '')
+				$('#fdis').html(dis);
+			else
+				$.getJSON('/Cotizacion/DistritoList/' + $('#fdep').val() + $('#fpro').val(), function (data) {
+					$.each(data, function (i, o) {
+						dis += "<option value='" + o.Value + "'>" + o.Text + "</option>";
+					});
+					$('#fdis').html(dis);
+				});
+		});
+
+		$('#dialog-edit').dialog({
+			dialogClass: 'dlgfixed',
+			position: 'center',
+			title: 'Carga',
+			autoOpen: false,
+			resizable: false,
+			height: 650,
+			width: 400,
+			show: { effect: 'drop', direction: 'up' },
+			modal: true,
+			draggable: true,
+			open: function (event, ui) {
+				$(this).load(url);
+			},
+			buttons: {
+				'Guardar': function () {
+					$('#form2').submit();
+				},
+				'Cancelar': function () {
+					$(this).dialog('close');
+				}
+			}
+		}).css('font-size', '.8em');
+		$('.crea').live('click', function (e) {
+			e.preventDefault();
+			url = $(this).attr('href');
+			$('#dialog-edit').dialog('open');
+			return false;
+		});
+		$('.dlgfixed').center(false);
+	});
+
+	function showValidationSummaryDialog() {
+		$('.validation-summary-errors').dialog({
+			title: 'Alerta',
+			width: 500,
+			height: 300,
+			show: { effect: 'drop', direction: 'up' },
+			modal: true,
+			resizable: false,
+			close: function () {
+				$(this).dialog('destroy').prependTo($('#form1'));
+			}
+		}).css({ "font-size": ".8em" });
+	}
+
+	function posteando() {
+		if ($('#OK').val() == '1') {
+			$('#dialog-edit').dialog('close');
+			$('#lcarga').load('@Url.Action("IndexCarga")');
+		}
+	}
+	</script>
+}

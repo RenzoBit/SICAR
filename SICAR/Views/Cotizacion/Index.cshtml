@@ -1,0 +1,107 @@
+﻿@model IEnumerable<SICAR.Models.Cotizacion>
+
+@{
+    ViewBag.Title = "Consultar cotización";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Consultar cotización</h2>
+
+<p>
+    @Html.ActionLink("Crear cotización", "Create")
+</p>
+
+@using (Html.BeginForm("Index", "Cotizacion", FormMethod.Post)) {
+<fieldset>
+    <legend>Búsqueda</legend>
+	<table>
+		<tr>
+			<td><div class="editor-label">@Html.Label("Fecha inicio", new { @for = "desde" })</div></td>
+			<td><div class="editor-field">@Html.TextBox("desde")</div></td>
+			<td><input type="submit" value="Buscar" /></td>
+		</tr>
+		<tr>
+			<td><div class="editor-label">@Html.Label("Fecha fin", new { @for = "hasta" })</div></td>
+			<td><div class="editor-field">@Html.TextBox("hasta")</div></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td><div class="editor-label">@Html.Label("Orden de trabajo", new { @for = "numero" })</div></td>
+			<td><div class="editor-field">@Html.TextBox("numero")</div></td>
+			<td></td>
+		</tr>
+	</table>
+</fieldset>
+}
+
+@if (Model.Count() > 0) {
+<table class="rvtabla">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.numero)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.idpersona)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cliente.ruc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fecha)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.idservicio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.neto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.estado)
+        </th>
+    </tr>
+	@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.numero)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cliente.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cliente.ruc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fecha)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.servicio.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.neto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.estado)
+        </td>
+    </tr>
+	}
+</table>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+	@Scripts.Render("~/bundles/jqueryui")
+	<script type="text/javascript">
+	$(function () {
+		$('#desde').datepicker({
+			dateFormat: 'dd/mm/yy',
+			changeMonth: true,
+			changeYear: true
+		});
+		$('#hasta').datepicker({
+			dateFormat: 'dd/mm/yy',
+			changeMonth: true,
+			changeYear: true
+		});
+	});
+	</script>
+}
